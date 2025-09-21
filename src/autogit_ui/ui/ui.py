@@ -2,16 +2,14 @@ import datetime
 import sys
 import json
 import os
-from functools import partial
 
 from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLineEdit,
                                QPushButton, QListWidget, QListWidgetItem,
                                QHBoxLayout, QLabel, QFileDialog, QSizePolicy,
                                QMessageBox, QTextEdit, QProgressBar, QGroupBox)
 from PySide6.QtCore import Qt, QDir, QStandardPaths, QSize, QThread, Signal, QTimer
-from PySide6.QtGui import QColor, QPalette
 
-from src.core.autogit import autogit
+from autogit_ui.core.autogit import autogit
 
 
 class GitWorker(QThread):
