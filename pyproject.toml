@@ -1,6 +1,6 @@
 [project]
 name = "autogit-ui"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add your description here"
 authors = [
     { name="optsimauth", email="optsimauth@gmail.com" },
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-autogit-ui = "ui.ui:main"
+autogit-ui = "src.ui.ui:main"
 
 [tool.setuptools]
 packages = ["src"]
