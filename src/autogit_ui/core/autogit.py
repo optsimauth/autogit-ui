@@ -45,7 +45,7 @@ def autogit(path, message=None, push=True, silent=False):
 
     # 检查是否在git仓库中
     git_dir_check = subprocess.run(['git', 'rev-parse', '--is-inside-work-tree'],
-                                   cwd=path, capture_output=True, text=True)
+                                   cwd=path, capture_output=True, text=True, encoding='utf-8')
     if git_dir_check.returncode != 0:
         error_msg = f"路径 '{path}' 不是一个Git仓库"
         log_print(f"❌ 错误: {error_msg}")
@@ -54,14 +54,14 @@ def autogit(path, message=None, push=True, silent=False):
     try:
         # Git add .
         log_print("📁 正在添加文件...")
-        result = subprocess.run(['git', 'add', '.'], cwd=path, capture_output=True, text=True)
+        result = subprocess.run(['git', 'add', '.'], cwd=path, capture_output=True, text=True, encoding='utf-8')
         if result.returncode != 0:
             error_msg = f"Git add 失败: {result.stderr.strip()}"
             log_print(f"❌ {error_msg}")
             return AutoGitResult(False, "添加文件失败", error_msg, "git add")
 
         # 检查是否有文件需要提交
-        result = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=path, capture_output=True)
+        result = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=path, capture_output=True, encoding='utf-8')
         if result.returncode == 0:
             info_msg = "没有文件需要提交"
             log_print(f"ℹ️  {info_msg}")
@@ -73,7 +73,8 @@ def autogit(path, message=None, push=True, silent=False):
             message = f"Auto commit: {current_date}"
 
         log_print(f"💾 正在提交: {message}")
-        result = subprocess.run(['git', 'commit', '-m', message], cwd=path, capture_output=True, text=True)
+        result = subprocess.run(['git', 'commit', '-m', message], cwd=path, capture_output=True, text=True,
+                                encoding='utf-8')
         if result.returncode != 0:
             error_msg = f"Git commit 失败: {result.stderr.strip()}"
             log_print(f"❌ {error_msg}")
@@ -84,7 +85,8 @@ def autogit(path, message=None, push=True, silent=False):
         # Git push (如果启用)
         if push:
             log_print("🚀 正在推送到远程仓库...")
-            result = subprocess.run(['git', 'push'], cwd=path, capture_output=True, text=True, timeout=30)
+            result = subprocess.run(['git', 'push'], cwd=path, capture_output=True, text=True, timeout=30,
+                                    encoding='utf-8')
             if result.returncode != 0:
                 error_msg = f"Git push 失败: {result.stderr.strip()}"
                 hint_msg = "可能需要先设置远程仓库或者检查网络连接"
